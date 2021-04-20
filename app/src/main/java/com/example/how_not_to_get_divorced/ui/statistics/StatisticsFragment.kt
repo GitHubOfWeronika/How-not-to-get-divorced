@@ -1,4 +1,4 @@
-package com.example.how_not_to_get_divorced.ui.gallery
+package com.example.how_not_to_get_divorced.ui.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.how_not_to_get_divorced.R
 
-class GalleryFragment : Fragment() {
+class StatisticsFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var statisticsModel: StatisticsModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-                ViewModelProvider(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        statisticsModel =
+                ViewModelProvider(this).get(StatisticsModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
+        val textView: TextView = root.findViewById(R.id.text_slideshow)
+        statisticsModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

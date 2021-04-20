@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_alarms">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.how_not_to_get_divorced.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_alarms"
+        android:name="com.example.how_not_to_get_divorced.ui.alarms.AlarmsFragment"
+        android:label="@string/menu_alarms"
+        tools:layout="@layout/fragment_alarms" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.how_not_to_get_divorced.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_new_alarm"
+        android:name="com.example.how_not_to_get_divorced.ui.new_alarm.NewAlarmFragment"
+        android:label="@string/menu_new_alarm"
+        tools:layout="@layout/fragment_new_alarm" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.how_not_to_get_divorced.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_statistics"
+        android:name="com.example.how_not_to_get_divorced.ui.statistics.StatisticsFragment"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_statistics" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.how_not_to_get_divorced.SettingsFragment"
+        android:label="@string/action_settings" />
 </navigation>
