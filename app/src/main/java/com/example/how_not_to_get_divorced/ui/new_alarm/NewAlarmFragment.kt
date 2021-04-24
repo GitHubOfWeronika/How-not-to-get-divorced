@@ -18,6 +18,7 @@ import com.example.how_not_to_get_divorced.model.Category
 import com.example.how_not_to_get_divorced.ui.customSpinner.CustomAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.textfield.TextInputEditText
 
 /**
  * Fragment of "new alarm" page
@@ -83,7 +84,7 @@ class NewAlarmFragment : Fragment() {
      * Generates alarm from current user input or show a toast
      */
     private fun getAlarm() : Alarm?{
-        val name = root.findViewById<TextView>(R.id.new_alarm_name).text.trim()
+        val name = root.findViewById<TextInputEditText>(R.id.new_alarm_name).text.toString().trim()
         val category = Category.CATEGORIES_LIST[root.findViewById<Spinner>(R.id.new_alarm_category).selectedItemPosition]
         val repetition = pagerAdapter.getAlarmSlider(viewPager.currentItem).getResult()
         if (name == "") {
@@ -93,7 +94,7 @@ class NewAlarmFragment : Fragment() {
             Toast.makeText(requireContext(), "It will never trigger", Toast.LENGTH_SHORT).show()
             return null
         } else {
-            return Alarm(name as String, category, repetition)
+            return Alarm(name, category, repetition)
         }
     }
 }
