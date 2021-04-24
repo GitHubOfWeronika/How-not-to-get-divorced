@@ -15,7 +15,11 @@
         android:id="@+id/nav_new_alarm"
         android:name="com.example.how_not_to_get_divorced.ui.new_alarm.NewAlarmFragment"
         android:label="@string/menu_new_alarm"
-        tools:layout="@layout/fragment_new_alarm" />
+        tools:layout="@layout/fragment_new_alarm" >
+        <action
+            android:id="@+id/action_nav_new_alarm_to_nav_alarms"
+            app:destination="@id/nav_alarms" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_statistics"

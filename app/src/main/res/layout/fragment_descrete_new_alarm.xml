@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+
+    <TextView
+        android:id="@+id/discrete_new_alarm_slider_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/adjust_discrete_slider"
+        android:textSize="18sp"
+        android:layout_marginBottom="8sp"/>
+    <LinearLayout
+        android:id="@+id/discrete_new_alarm_simple_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/discrete_new_alarm_weekend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textSize="18sp"
+            android:textColor="@android:color/tab_indicator_text"
+            android:text="@string/include_weekends"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/discrete_new_alarm_complex_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mon" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_mon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tue" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_tue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wed" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_wed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thu" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_thu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fri" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_fri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sat" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_sat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sun" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/discrete_new_alarm_slider_sun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="100.0" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/discrete_new_alarm_collapse_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/show_weekdays"
+            />
+    </RelativeLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

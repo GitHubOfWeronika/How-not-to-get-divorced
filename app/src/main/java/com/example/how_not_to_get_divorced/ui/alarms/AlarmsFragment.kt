@@ -22,10 +22,6 @@ class AlarmsFragment : Fragment() {
         alarmsModel =
                 ViewModelProvider(this).get(AlarmsModel::class.java)
         val root = inflater.inflate(R.layout.fragment_alarms, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        alarmsModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 }

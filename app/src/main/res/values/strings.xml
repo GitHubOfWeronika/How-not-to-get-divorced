@@ -27,4 +27,23 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="name">Name</string>
+    <string name="adjust_discrete_slider">Set percent change of firing</string>
+    <string name="adjust_continuous_slider">Set expected number of firing per day</string>
+    <string name="continuous">Continuous</string>
+    <string name="discrete">Discrete</string>
+    <string name="mon">Monday</string>
+    <string name="tue">Tuesday</string>
+    <string name="wed">Wednesday</string>
+    <string name="thu">Thursday</string>
+    <string name="fri">Friday</string>
+    <string name="sat">Saturday</string>
+    <string name="sun">Sunday</string>
+    <string name="include_weekends">Include weekends</string>
+    <string name="show_weekdays">Show weekdays</string>
+    <string name="hide_weekdays">Hide weekdays</string>
+    <string name="per_day">per day</string>
+    <string name="reminder_type">Reminder type</string>
+    <string name="category">Category</string>
+    <string name="add_new_reminder">Add new reminder</string>
 </resources>
