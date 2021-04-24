@@ -4,77 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.new_alarm.NewAlarmFragment">
+    tools:context=".ui.new_alarm.NewAlarmFragment"
+    android:animateLayoutChanges="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
 
-    <TextView
-        android:id="@+id/alarmsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/menu_new_alarm"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:textSize="32sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="160sp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/new_alarm_backgroud"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/new_alarm_name"
+            <TextView
+                android:id="@+id/alarmsText"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/menu_new_alarm"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_alarm_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:layout_marginStart="12sp"
+            android:textSize="18sp"
+            />
+
+        <Spinner
+            android:id="@+id/new_alarm_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reminder_type"
+            android:textSize="18sp"
+            android:layout_marginStart="12sp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/category"
-        android:layout_marginStart="12sp"
-        android:textSize="18sp"
-        />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/slider_new_alarm_tabs"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
-    <Spinner
-        android:id="@+id/new_alarm_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8sp" />
+        </com.google.android.material.tabs.TabLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/reminder_type"
-        android:textSize="18sp"
-        android:layout_marginStart="12sp"/>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/slider_new_alarm_tabs"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/slider_new_alarm_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8sp" />
-    <Button
-        android:id="@+id/new_alarm_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_new_reminder"
-        android:layout_margin="8sp" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/slider_new_alarm_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8sp" />
+        <Button
+            android:id="@+id/new_alarm_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_reminder"
+            android:layout_margin="8sp" />
 
     </LinearLayout>
 </ScrollView>
