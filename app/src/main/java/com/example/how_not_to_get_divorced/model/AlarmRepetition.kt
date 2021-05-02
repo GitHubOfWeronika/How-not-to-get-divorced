@@ -8,26 +8,26 @@ sealed class AlarmRepetition {
      * Class of discrete repetition value [0, 1] - chances to fire on specific weekday
      */
     data class Discrete(
-        val monday: Float,
-        val tuesday: Float,
-        val wednesday: Float,
-        val thursday: Float,
-        val friday: Float,
-        val saturday: Float,
-        val sunday: Float
+        var monday: Float,
+        var tuesday: Float,
+        var wednesday: Float,
+        var thursday: Float,
+        var friday: Float,
+        var saturday: Float,
+        var sunday: Float
         ) : AlarmRepetition()
 
     /**
      * Class of continuous repetition value of expected number of firing on specific weekday
      */
     data class Continuous(
-        val monday: Float,
-        val tuesday: Float,
-        val wednesday: Float,
-        val thursday: Float,
-        val friday: Float,
-        val saturday: Float,
-        val sunday: Float
+        var monday: Float,
+        var tuesday: Float,
+        var wednesday: Float,
+        var thursday: Float,
+        var friday: Float,
+        var saturday: Float,
+        var sunday: Float
     ) : AlarmRepetition()
 
     fun getExpectedNumberOfTriggers(): Float{

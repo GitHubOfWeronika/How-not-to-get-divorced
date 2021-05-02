@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.how_not_to_get_divorced.R
+import com.example.how_not_to_get_divorced.database.DBAccess
 import com.example.how_not_to_get_divorced.model.Alarm
 import com.example.how_not_to_get_divorced.model.Category
 import com.example.how_not_to_get_divorced.ui.customSpinner.CustomAdapter
@@ -25,7 +26,6 @@ import com.google.android.material.textfield.TextInputEditText
  */
 class NewAlarmFragment : Fragment() {
     private lateinit var root: View
-    private lateinit var newAlarmModel: NewAlarmModel
     private lateinit var pagerAdapter: ScreenSlidePagerAdapter
     private lateinit var viewPager: ViewPager2
 
@@ -34,8 +34,6 @@ class NewAlarmFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        newAlarmModel =
-                ViewModelProvider(this).get(NewAlarmModel::class.java)
         root = inflater.inflate(R.layout.fragment_new_alarm, container, false)
         //Prepare category spinner
         val categorySpinner : Spinner = root.findViewById(R.id.new_alarm_category)
@@ -75,7 +73,9 @@ class NewAlarmFragment : Fragment() {
         val navController = findNavController()
         val alarm = getAlarm()
         if (alarm != null){
-            // Todo: add alarm to data base
+            Thread {
+                DBAccess(requireContext()).insertAlarm(alarm)
+            }.start()
             navController.navigate(R.id.nav_alarms)
         }
     }
@@ -94,7 +94,7 @@ class NewAlarmFragment : Fragment() {
             Toast.makeText(requireContext(), "It will never trigger", Toast.LENGTH_SHORT).show()
             return null
         } else {
-            return Alarm(name, category, repetition)
+            return Alarm(null, name, category, repetition)
         }
     }
 }
