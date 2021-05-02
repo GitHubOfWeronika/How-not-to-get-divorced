@@ -4,8 +4,7 @@ import com.example.how_not_to_get_divorced.model.AlarmRepetition
 import com.google.android.material.slider.LabelFormatter
 
 
-class DiscreteNewAlarmSlider(collapse: Boolean, changeCollapse: (Boolean) -> Unit)
-    : NewAlarmSlider(collapse, changeCollapse) {
+class DiscreteNewAlarmSlider : NewAlarmSlider() {
 
     // Returns current state AlarmRepetition object
     override fun getResult() : AlarmRepetition = AlarmRepetition.Discrete (

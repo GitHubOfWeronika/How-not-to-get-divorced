@@ -14,8 +14,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
-class ContinuousNewAlarmSlider(collapse: Boolean, changeCollapse: (Boolean) -> Unit) :
-    NewAlarmSlider(collapse, changeCollapse) {
+class ContinuousNewAlarmSlider : NewAlarmSlider() {
 
     // Sets description of continuous slider
     override fun onCreateView(

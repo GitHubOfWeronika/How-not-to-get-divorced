@@ -44,6 +44,7 @@ class NewAlarmFragment : Fragment() {
         pagerAdapter = ScreenSlidePagerAdapter(this)
         val tabLayout = root.findViewById<TabLayout>(R.id.slider_new_alarm_tabs)
         viewPager.adapter = pagerAdapter
+        pagerAdapter.notifyDataSetChanged()
 
         //Connecting view pager with tab bar
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

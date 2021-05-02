@@ -19,9 +19,27 @@ import com.google.android.material.switchmaterial.SwitchMaterial
  * collapse - if has simple layout (no weekdays)
  * changeCollapse - function of setting collapse parameter
  */
-abstract class NewAlarmSlider(private var collapse: Boolean, val changeCollapse: (Boolean) -> Unit) : Fragment() {
+abstract class NewAlarmSlider : Fragment() {
     lateinit var root: View
     lateinit var weekdaySliders:Array<Slider> // array of weekdays slider
+    var collapse = true
+        set(visible){
+            field = !visible
+            if (! this::root.isInitialized) return // if root was not initialized
+            val simpl = root.findViewById<LinearLayout>(R.id.discrete_new_alarm_simple_slider) // simple layout
+            val compl = root.findViewById<LinearLayout>(R.id.discrete_new_alarm_complex_slider) // complex (weekday) layout
+            val btn = root.findViewById<Button>(R.id.discrete_new_alarm_collapse_btn)
+            if(visible){
+                btn.text = getString(R.string.hide_weekdays)
+                simpl.visibility = View.GONE
+                compl.visibility = View.VISIBLE
+            } else {
+                btn.text = getString(R.string.show_weekdays)
+                compl.visibility = View.GONE
+                simpl.visibility = View.VISIBLE
+            }
+        }
+    var changeCollapse: (Boolean) -> Unit = {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,26 +98,10 @@ abstract class NewAlarmSlider(private var collapse: Boolean, val changeCollapse:
                 }
             }
         }
-        setCollapse(!collapse)
+        collapse = !collapse
         return root
     }
 
-    fun setCollapse(visible: Boolean){
-        collapse = !visible
-        if (! this::root.isInitialized) return // if root was not initialized
-        val simpl = root.findViewById<LinearLayout>(R.id.discrete_new_alarm_simple_slider) // simple layout
-        val compl = root.findViewById<LinearLayout>(R.id.discrete_new_alarm_complex_slider) // complex (weekday) layout
-        val btn = root.findViewById<Button>(R.id.discrete_new_alarm_collapse_btn)
-        if(visible){
-            btn.text = getString(R.string.hide_weekdays)
-            simpl.visibility = View.GONE
-            compl.visibility = View.VISIBLE
-        } else {
-            btn.text = getString(R.string.show_weekdays)
-            compl.visibility = View.GONE
-            simpl.visibility = View.VISIBLE
-        }
-    }
     abstract fun getResult() : AlarmRepetition
     abstract fun getFormatter() : LabelFormatter
 }

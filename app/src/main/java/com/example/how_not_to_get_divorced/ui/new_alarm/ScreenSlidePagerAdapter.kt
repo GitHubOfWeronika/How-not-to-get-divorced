@@ -8,17 +8,24 @@ import com.example.how_not_to_get_divorced.ui.new_alarm.sliders.DiscreteNewAlarm
 import com.example.how_not_to_get_divorced.ui.new_alarm.sliders.NewAlarmSlider
 
 class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
+
+    private val id = 0L
     private var fragments: Array<NewAlarmSlider> = arrayOf(
-        DiscreteNewAlarmSlider(true) {v -> unify(v)},
-        ContinuousNewAlarmSlider(true) {v -> unify(v)}
+        DiscreteNewAlarmSlider(),
+        ContinuousNewAlarmSlider()
     )
+
+    init {
+        fragments[0].changeCollapse = {unify(it)}
+        fragments[1].changeCollapse = {unify(it)}
+    }
 
     /**
      * Sets collapse on every fragment
      */
     private fun unify(v: Boolean){
         for (frag in fragments){
-            frag.setCollapse(v)
+            frag.collapse = v
         }
     }
 
@@ -36,4 +43,8 @@ class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
      * Returns NewAlarmSlider with specific index
      */
     fun getAlarmSlider(pos: Int) : NewAlarmSlider = fragments[pos]
+
+    override fun getItemId(position: Int) = id + position
+
+    override fun containsItem(itemId: Long) = itemId >= id && itemId < id + fragments.size
 }
