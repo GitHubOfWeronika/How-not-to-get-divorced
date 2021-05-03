@@ -6,7 +6,7 @@ data class FullTask(
     var id: Int,
     var alarm: Int,
     var date: Long,
-    var changed: Date? = null,
+    var changed: Long? = null,
     var completion: Int,
     val name: String,
     val category: Int,

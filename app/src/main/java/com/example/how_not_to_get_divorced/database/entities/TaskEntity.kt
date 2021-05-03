@@ -20,6 +20,6 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(index = true) var alarm: Int,
     var date: Long = System.currentTimeMillis() / 1000L,
-    var changed: Date? = null,
+    var changed: Long? = null,
     var completion: Int = Completion.WAITING.id,
 )

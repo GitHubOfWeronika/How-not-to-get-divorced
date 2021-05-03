@@ -72,6 +72,7 @@ class Mappers {
                         Date(alarm.created*1000L)
                     ),
                     java.util.Date(alarm.date * 1000),
+                    alarm.changed?.times(1000L)?.let { Date(it) },
                     Completion.get(alarm.completion)
                 )
             } else {
@@ -95,6 +96,7 @@ class Mappers {
                         Date(alarm.created*1000L)
                     ),
                     java.util.Date(alarm.date * 1000),
+                    alarm.changed?.times(1000L)?.let { Date(it) },
                     Completion.get(alarm.completion)
                 )
             }
