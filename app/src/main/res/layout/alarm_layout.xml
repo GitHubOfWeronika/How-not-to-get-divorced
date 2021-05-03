@@ -4,72 +4,143 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="15dp"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp">
 
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="116dp"
         android:padding="8dp">
 
-        <CheckBox
-            android:id="@+id/todoCheckBox"
-            android:layout_width="353dp"
-            android:layout_height="wrap_content"
-            android:buttonTint="@android:color/holo_purple"
-            android:checked="false"
+        <TextView
+            android:id="@+id/alarmName"
+            android:layout_width="225dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/imageViewType"
             android:paddingStart="8dp"
-            tool:text="This is an Sample Task inside the application." />
+            android:paddingTop="12dp"
+            android:text="Really Important Alarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imageViewType"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/todoCheckBox"
-            android:layout_marginTop="10dp"
-            android:paddingStart="20dp"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/alarmName" />
 
         <ImageView
-            android:id="@+id/imageViewPriority"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/todoCheckBox"
-            android:layout_marginStart="7dp"
+            android:id="@+id/imageViewDay1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/imageViewType"
-            android:paddingStart="20dp"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@drawable/alarm_icon" />
 
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/todoCheckBox"
-            android:layout_marginStart="15dp"
+        <ImageView
+            android:id="@+id/imageViewDay2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/imageViewPriority"
-            android:ems="5"
-            android:enabled="false"
-            android:hint="16.4.2021"
-            android:inputType="date"
-            android:textAlignment="center" />
+            android:layout_toEndOf="@+id/imageViewDay1"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
 
-        <EditText
-            android:id="@+id/editTextTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/todoCheckBox"
-            android:layout_marginStart="15dp"
+        <ImageView
+            android:id="@+id/imageViewDay3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/editTextDate"
-            android:ems="5"
-            android:enabled="false"
-            android:hint="18:00"
-            android:inputType="time"
-            android:textAlignment="center" />
+            android:layout_toEndOf="@+id/imageViewDay2"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay4"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay3"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay5"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay4"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay6"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay5"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay7"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay6"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay8"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay7"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay9"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay8"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
+
+        <ImageView
+            android:id="@+id/imageViewDay10"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/alarmName"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageViewDay9"
+            android:layout_marginStart="5dp"
+            app:srcCompat="@drawable/alarm_icon" />
 
     </RelativeLayout>
+
+
 
 </androidx.cardview.widget.CardView>
