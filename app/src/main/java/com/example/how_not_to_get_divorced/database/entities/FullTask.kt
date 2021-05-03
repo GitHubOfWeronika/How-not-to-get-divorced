@@ -1,9 +1,12 @@
 package com.example.how_not_to_get_divorced.database.entities
 
+import java.util.*
+
 data class FullTask(
     var id: Int,
     var alarm: Int,
     var date: Long,
+    var changed: Date? = null,
     var completion: Int,
     val name: String,
     val category: Int,

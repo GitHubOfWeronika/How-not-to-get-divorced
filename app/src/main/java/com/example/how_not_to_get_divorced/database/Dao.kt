@@ -63,6 +63,19 @@ interface  Dao {
         return getStatisticsQuery(simpleSQLiteQuery)
     }
 
+    @RawQuery(
+        observedEntities = [TaskEntity::class]
+    )
+    fun getTimeStatisticsQuery(query: SupportSQLiteQuery) : LiveData<List<Long>>
+
+    fun getTimeStatistics(alarmId: Int, until: Long, completion: Int) : LiveData<List<Long>>{
+        val query =
+            "SELECT changed - date FROM task " +
+            "WHERE alarm = :id AND task.date >= :until AND changed IS NOT NULL AND completion = :completion"
+        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(alarmId, until, completion))
+        return getTimeStatisticsQuery(simpleSQLiteQuery)
+    }
+
     @Update
     fun updateTask(task: TaskEntity)
 
