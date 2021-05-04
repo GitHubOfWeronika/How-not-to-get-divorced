@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
 import com.example.how_not_to_get_divorced.database.DBAccess
-import com.example.how_not_to_get_divorced.model.Completion
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,6 +37,7 @@ class AlarmsFragment : Fragment() {
 
         val db = DBAccess(requireContext())
         db.getAllAlarms().observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
+            alarmModelsList.clear()
             it.forEach {alarm ->
                 (db.getStatistics(alarm,getDaysAgo(10))).observe(viewLifecycleOwner,androidx.lifecycle.Observer {
                     alarmModelsList.add(AlarmRecyclerModel(alarm,it))
