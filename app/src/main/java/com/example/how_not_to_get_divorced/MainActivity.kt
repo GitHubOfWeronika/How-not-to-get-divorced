@@ -29,9 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         // Test
         val db = DBAccess(applicationContext)
-        db.getAllAlarms().observe(this) {
+
+        db.getAllAlarms().observe(this, androidx.lifecycle.Observer {
             Log.d("test", it.toString())
-        }
+        })
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
