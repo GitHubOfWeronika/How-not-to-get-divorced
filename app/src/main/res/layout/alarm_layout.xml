@@ -19,7 +19,7 @@
             android:layout_width="225dp"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/imageViewType"
+            android:layout_toEndOf="@+id/imageViewAlarmCategory"
             android:paddingStart="8dp"
             android:paddingTop="12dp"
             android:text="Really Important Alarm"
@@ -27,19 +27,20 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/imageViewType"
+            android:id="@+id/imageViewAlarmCategory"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             app:srcCompat="@drawable/alarm_icon" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switchAlarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="30dp"
-            android:layout_toEndOf="@+id/alarmName" />
+            android:layout_toEndOf="@+id/alarmName"
+            android:checked="false" />
 
         <ImageView
             android:id="@+id/imageViewDay1"
@@ -47,7 +48,7 @@
             android:layout_height="25dp"
             android:layout_below="@+id/alarmName"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/circle_icon1" />
+            app:srcCompat="@drawable/square_icon1" />
 
         <ImageView
             android:id="@+id/imageViewDay2"
