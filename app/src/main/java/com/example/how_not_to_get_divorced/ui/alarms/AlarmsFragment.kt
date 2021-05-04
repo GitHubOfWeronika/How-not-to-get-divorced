@@ -38,16 +38,14 @@ class AlarmsFragment : Fragment() {
 
         val db = DBAccess(requireContext())
         db.getAllAlarms().observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
-            var alarms = it
-            var statistics: Array<Map<Completion, Int>>? = db.getStatistics(alarms[0],getDaysAgo(10)).value
-            alarms.forEach {alarm ->
+            it.forEach {alarm ->
                 (db.getStatistics(alarm,getDaysAgo(10))).observe(viewLifecycleOwner,androidx.lifecycle.Observer {
-                    statistics=it
+                    alarmModelsList.add(AlarmRecyclerModel(alarm,it))
+                    alarmAdapter.setTasks(alarmModelsList)
+                    alarmAdapter.notifyDataSetChanged()
                 })
-                statistics?.let { it1 -> AlarmRecyclerModel(alarm, it1) }?.let { it2 -> alarmModelsList.add(it2) }
             }
-            alarmAdapter.setTasks(alarmModelsList)
-            alarmAdapter.notifyDataSetChanged()
+
         })
         /*var alarms = db.getAllAlarms()
         alarms.value?.forEach {

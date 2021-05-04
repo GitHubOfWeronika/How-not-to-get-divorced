@@ -67,7 +67,6 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         var item : AlarmRecyclerModel = alarmsList[position]
         holder.alarmName.text=item.alarm.name
         setStatistics(holder,item.alarm.repetition,item.statistics)
-        TODO("Not yet implemented")
     }
 
     private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : Array<Map<Completion, Int>>){
