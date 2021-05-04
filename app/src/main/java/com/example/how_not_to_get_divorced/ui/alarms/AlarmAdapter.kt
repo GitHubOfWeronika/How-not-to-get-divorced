@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
@@ -15,7 +16,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
-    private var alarmsList : MutableList<AlarmRecyclerModel> = ArrayList<AlarmRecyclerModel>()
+    private var alarmsList : MutableList<AlarmRecyclerModel> = ArrayList()
     var fragment : AlarmsFragment = fragment
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -64,34 +65,35 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item : AlarmRecyclerModel = alarmsList[position]
+        holder.alarmName.text=item.alarm.name
         setStatistics(holder,item.alarm.repetition,item.statistics)
         TODO("Not yet implemented")
     }
 
-    private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : LiveData<Array<Map<Completion, Int>>>){
+    private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : Array<Map<Completion, Int>>){
         if(repetition.getType()=="Discrete"){
-            setDiscreteStatisticImage(holder.imageViewDay1, statistics.value?.get(9)?.get(Completion.DONE),statistics.value?.get(9)?.get(Completion.FAILED),statistics.value?.get(9)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay2, statistics.value?.get(8)?.get(Completion.DONE),statistics.value?.get(8)?.get(Completion.FAILED),statistics.value?.get(8)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay3, statistics.value?.get(7)?.get(Completion.DONE),statistics.value?.get(7)?.get(Completion.FAILED),statistics.value?.get(7)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay4, statistics.value?.get(6)?.get(Completion.DONE),statistics.value?.get(6)?.get(Completion.FAILED),statistics.value?.get(6)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay5, statistics.value?.get(5)?.get(Completion.DONE),statistics.value?.get(5)?.get(Completion.FAILED),statistics.value?.get(5)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay6, statistics.value?.get(4)?.get(Completion.DONE),statistics.value?.get(4)?.get(Completion.FAILED),statistics.value?.get(4)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay7, statistics.value?.get(3)?.get(Completion.DONE),statistics.value?.get(3)?.get(Completion.FAILED),statistics.value?.get(3)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay8, statistics.value?.get(2)?.get(Completion.DONE),statistics.value?.get(2)?.get(Completion.FAILED),statistics.value?.get(2)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay9, statistics.value?.get(1)?.get(Completion.DONE),statistics.value?.get(1)?.get(Completion.FAILED),statistics.value?.get(1)?.get(Completion.WAITING))
-            setDiscreteStatisticImage(holder.imageViewDay10, statistics.value?.get(0)?.get(Completion.DONE),statistics.value?.get(0)?.get(Completion.FAILED),statistics.value?.get(0)?.get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay1, statistics[9][Completion.DONE],statistics.get(9)?.get(Completion.FAILED),statistics.get(9).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay2, statistics.get(8).get(Completion.DONE),statistics.get(8).get(Completion.FAILED),statistics.get(8).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay3, statistics.get(7).get(Completion.DONE),statistics.get(7).get(Completion.FAILED),statistics.get(7).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay4, statistics.get(6).get(Completion.DONE),statistics.get(6).get(Completion.FAILED),statistics.get(6).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay5, statistics.get(5).get(Completion.DONE),statistics.get(5).get(Completion.FAILED),statistics.get(5).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay6, statistics.get(4).get(Completion.DONE),statistics.get(4).get(Completion.FAILED),statistics.get(4).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay7, statistics.get(3).get(Completion.DONE),statistics.get(3).get(Completion.FAILED),statistics.get(3).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay8, statistics.get(2).get(Completion.DONE),statistics.get(2).get(Completion.FAILED),statistics.get(2).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay9, statistics.get(1).get(Completion.DONE),statistics.get(1).get(Completion.FAILED),statistics.get(1).get(Completion.WAITING))
+            setDiscreteStatisticImage(holder.imageViewDay10, statistics.get(0).get(Completion.DONE),statistics.get(0).get(Completion.FAILED),statistics.get(0).get(Completion.WAITING))
         }
         if (repetition.getType()=="Continuous"){
-            setContinuousStatisticImage(holder.imageViewDay1, statistics.value?.get(9)?.get(Completion.DONE),statistics.value?.get(9)?.get(Completion.FAILED),statistics.value?.get(9)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay2, statistics.value?.get(8)?.get(Completion.DONE),statistics.value?.get(8)?.get(Completion.FAILED),statistics.value?.get(8)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay3, statistics.value?.get(7)?.get(Completion.DONE),statistics.value?.get(7)?.get(Completion.FAILED),statistics.value?.get(7)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay4, statistics.value?.get(6)?.get(Completion.DONE),statistics.value?.get(6)?.get(Completion.FAILED),statistics.value?.get(6)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay5, statistics.value?.get(5)?.get(Completion.DONE),statistics.value?.get(5)?.get(Completion.FAILED),statistics.value?.get(5)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay6, statistics.value?.get(4)?.get(Completion.DONE),statistics.value?.get(4)?.get(Completion.FAILED),statistics.value?.get(4)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay7, statistics.value?.get(3)?.get(Completion.DONE),statistics.value?.get(3)?.get(Completion.FAILED),statistics.value?.get(3)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay8, statistics.value?.get(2)?.get(Completion.DONE),statistics.value?.get(2)?.get(Completion.FAILED),statistics.value?.get(2)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay9, statistics.value?.get(1)?.get(Completion.DONE),statistics.value?.get(1)?.get(Completion.FAILED),statistics.value?.get(1)?.get(Completion.WAITING))
-            setContinuousStatisticImage(holder.imageViewDay10, statistics.value?.get(0)?.get(Completion.DONE),statistics.value?.get(0)?.get(Completion.FAILED),statistics.value?.get(0)?.get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay1, statistics[9][Completion.DONE],statistics.get(9)?.get(Completion.FAILED),statistics.get(9).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay2, statistics.get(8).get(Completion.DONE),statistics.get(8).get(Completion.FAILED),statistics.get(8).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay3, statistics.get(7).get(Completion.DONE),statistics.get(7).get(Completion.FAILED),statistics.get(7).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay4, statistics.get(6).get(Completion.DONE),statistics.get(6).get(Completion.FAILED),statistics.get(6).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay5, statistics.get(5).get(Completion.DONE),statistics.get(5).get(Completion.FAILED),statistics.get(5).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay6, statistics.get(4).get(Completion.DONE),statistics.get(4).get(Completion.FAILED),statistics.get(4).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay7, statistics.get(3).get(Completion.DONE),statistics.get(3).get(Completion.FAILED),statistics.get(3).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay8, statistics.get(2).get(Completion.DONE),statistics.get(2).get(Completion.FAILED),statistics.get(2).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay9, statistics.get(1).get(Completion.DONE),statistics.get(1).get(Completion.FAILED),statistics.get(1).get(Completion.WAITING))
+            setContinuousStatisticImage(holder.imageViewDay10, statistics.get(0).get(Completion.DONE),statistics.get(0).get(Completion.FAILED),statistics.get(0).get(Completion.WAITING))
         }
 
     }
