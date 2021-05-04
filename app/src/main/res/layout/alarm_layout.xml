@@ -47,7 +47,7 @@
             android:layout_height="25dp"
             android:layout_below="@+id/alarmName"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/circle_icon1" />
 
         <ImageView
             android:id="@+id/imageViewDay2"
@@ -57,7 +57,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay1"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon4" />
 
         <ImageView
             android:id="@+id/imageViewDay3"
@@ -67,7 +67,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay2"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon3" />
 
         <ImageView
             android:id="@+id/imageViewDay4"
@@ -77,7 +77,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay3"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon5" />
 
         <ImageView
             android:id="@+id/imageViewDay5"
@@ -87,7 +87,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay4"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon5" />
 
         <ImageView
             android:id="@+id/imageViewDay6"
@@ -97,7 +97,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay5"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon2" />
 
         <ImageView
             android:id="@+id/imageViewDay7"
@@ -107,7 +107,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay6"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon3" />
 
         <ImageView
             android:id="@+id/imageViewDay8"
@@ -117,7 +117,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay7"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon1" />
 
         <ImageView
             android:id="@+id/imageViewDay9"
@@ -127,7 +127,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay8"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon2" />
 
         <ImageView
             android:id="@+id/imageViewDay10"
@@ -137,7 +137,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageViewDay9"
             android:layout_marginStart="5dp"
-            app:srcCompat="@drawable/alarm_icon" />
+            app:srcCompat="@drawable/square_icon1" />
 
     </RelativeLayout>
 
