@@ -34,7 +34,7 @@ class Mappers {
                     alarm.id,
                     alarm.name,
                     Category.getById(alarm.category)!!,
-                    AlarmRepetition.Continuous(
+                    AlarmRepetition.Discrete(
                         alarm.monday,
                         alarm.tuesday,
                         alarm.wednesday,
