@@ -39,7 +39,7 @@ class AlarmsFragment : Fragment() {
         db.getAllAlarms().observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
             alarmModelsList.clear()
             it.forEach {alarm ->
-                (db.getStatistics(alarm,getDaysAgo(10))).observe(viewLifecycleOwner,androidx.lifecycle.Observer {
+                (db.getStatistics(alarm,getDaysAgo(20))).observe(viewLifecycleOwner,androidx.lifecycle.Observer {
                     alarmModelsList.add(AlarmRecyclerModel(alarm, it))
                     alarmAdapter.setTasks(alarmModelsList)
                     alarmAdapter.notifyDataSetChanged()
