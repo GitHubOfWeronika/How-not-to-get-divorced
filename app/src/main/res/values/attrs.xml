@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Histogram">
+        <attr name="color" format="color" />
+        <attr name="minX" format="float" />
+        <attr name="maxX" format="float" />
+        <attr name="histogramStep" format="float" />
+    </declare-styleable>
+</resources>
