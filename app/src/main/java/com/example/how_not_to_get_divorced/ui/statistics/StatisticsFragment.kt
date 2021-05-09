@@ -23,10 +23,10 @@ class StatisticsFragment : Fragment() {
         statisticsModel =
                 ViewModelProvider(this).get(StatisticsModel::class.java)
         val root = inflater.inflate(R.layout.fragment_statistics, container, false)
-        val histogram = root.findViewById<Histogram>(R.id.histogram)
-        val data : Array<Float> = Array(2000) {(sqrt(-2.0 * ln(random())) * cos(2.0 * PI * random())).toFloat() }
-        histogram.histogramData = data
-        histogram.f = {
+        val histogram = root.findViewById<Histogram>(R.id.histogram) // znajdź histogram
+        val data : Array<Float> = Array(2000) {(sqrt(-2.0 * ln(random())) * cos(2.0 * PI * random())).toFloat() } // wygeneruj dane o rozkładzie normalnym
+        histogram.histogramData = data // przekaż dane do histogramu
+        histogram.f = { // podaj oczekiwany rozkłąd doanych
             (1.0/sqrt(2*PI)* exp(-it*it/2.0)).toFloat()
         }
         return root

@@ -12,7 +12,7 @@ import kotlin.math.*
 
 
 class Histogram(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
-    var color: Int = Color.CYAN
+    var color: Int = Color.CYAN // Kolor naszego wyresu
         set(color) {
             borderPaint = Paint()
             borderPaint.color = color
@@ -25,59 +25,48 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             histPaint.alpha = 64
             field = color
         }
-    private var isFSet = false
-    var f : ((Float) -> Float) = {
-        //(1.0/sqrt(2*PI)* exp(-it*it/2.0)).toFloat()
-        1.0F
-    }
+    private var isFSet = false // czy mamy oczekiwany rozkład
+    var f : ((Float) -> Float) = { 1.0F } //Funkcja oczekiwanego rozkąłd
         set(f: ((Float) -> Float)){
             field = f
             isFSet = true
             adjustF()
         }
-
+    // Używane farby
     private var popupTextPaint: Paint = Paint()
     private var popupBackgroundPaint: Paint = Paint()
     private var bottomPaint: Paint = Paint()
     private lateinit var borderPaint: Paint
     private lateinit var fPaint: Paint
     private lateinit var histPaint: Paint
-    var displayRangeNumber : (Float) -> String = {
+    var displayRangeNumber : (Float) -> String = { // Funkcja do ustawienia sposobu wyświetlania danych na osi X
         "%.1f".format(it)
     }
-    var displayRange : (Float, Float) -> String = { r1, r2 ->
+    var displayRange : (Float, Float) -> String = { r1, r2 -> // Funkcja do ustawienia sposobu wyświetlania danych przedziałów
         displayRangeNumber(r1) + " - " + displayRangeNumber(r2)
     }
-    val topMarginPopup = 20F
-    val paddingPopup = 50F
-    var histogramStep = 0.5F
+    private val topMarginPopup = 20F // Odkegłość dymka od górnej granicy
+    private val paddingPopup = 50F // Padding w dymku
+    var histogramStep = 0.5F // Określa jaki przedział obejmuje pojedyńczy słupek w histogramie
         set(v){
             field = v
             manualStep = true
             adjustHistogram()
             invalidate()
         }
-    private var manualStep = false
-    private var pixelsForHist = 600F/8F
-    private var hist = arrayOf(0)
-    var histogramData : Array<Float> = Array(1000) {random().toFloat()}
+    private var manualStep = false // czy histogramStep oztsał ustwainy przez użytkowika, czy jest automatyczny
+    private var pixelsForHist = 1F // Liczba pikseli na jeden słupek histogramu
+    private var hist = arrayOf(0) // wyskokości w histogramie
+    var histogramData : Array<Float> = Array(1000) {random().toFloat()} // dane do wyliczenia histogramu
         set(v){
             field = v
             adjustHistogram()
             invalidate()
         }
-    private var histScale : Float = 1.0F / (hist.sum() * 0.5F)
-    private val labelX = 12
-    private val labelY = 60
-    var minX = -2F
-        set(v){
-            field = v
-            manualX = true
-            adjustHistogram()
-            if (isFSet) adjustF()
-            invalidate()
-        }
-    var maxX = 2F
+    private var histScale : Float = 1.0F / (hist.sum() * 0.5F) // dostosowuje wysokość wistogramu do wysokości oczekiwanego rozkłądu
+    private val labelX = 12 // pixele na margines po lewej
+    private val labelY = 60 // pixele na margines w dole
+    var minX = 0F // zakres wyświetlania wykresu na osi X
         set(v){
             field = v
             manualX = true
@@ -85,24 +74,32 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             if (isFSet) adjustF()
             invalidate()
         }
-    private var manualX = false
-    private val minY = 0F
+    var maxX = 1F
+        set(v){
+            field = v
+            manualX = true
+            adjustHistogram()
+            if (isFSet) adjustF()
+            invalidate()
+        }
+    private var manualX = false // czy zakres x postał ustawiny ręcznie
+    private val minY = 0F // zakres wyświetlania wykresu na osi Y
     private var maxY = 4F
-    private var a = 1F
-    private var b = 0F
-    private var pixelsOfGraph = 600
-    private var graphPoints : Array<Float> = Array(pixelsOfGraph) {
+    private var a = 1F // stała kierunkowa przeliczenia pozycji y na pixele
+    private var b = 0F // wyraz wolny przeliczenia pozycji y na pixele
+    private var pixelsOfGraph = 600 //pixele na wyres
+    private var graphPoints : Array<Float> = Array(pixelsOfGraph) { // wartość x dla każdego pixela
         minX + (maxX - minX) * it.toFloat() / pixelsOfGraph.toFloat()
     }
-    private var fPoints = graphPoints.map{ x -> f(x) }
-    private var popupText : String? = null
+    private var fPoints = graphPoints.map{ x -> f(x) } // wartość y dla każdego pixela
+    private var popupText : String? = null // dane dotyczące dymku z szczegółowymi informacjami
     private var popupPath : Path? = null
     private var popupX : Float? = null
     private var popupRanges : String? = null
     private var popupBottomX : Float? = null
 
     init {
-        val attr: TypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.Histogram)
+        val attr: TypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.Histogram) // usawianie parametrów na podsatwie attrybutów z XML'a
         try {
             val c = attr.getColor(R.styleable.Histogram_color, Color.CYAN)
             color = c
@@ -118,6 +115,7 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         } finally {
             attr.recycle()
         }
+        // przygotowanie paintów
         popupTextPaint.textSize = 80F
         popupTextPaint.color = Color.WHITE
         popupTextPaint.textAlign
@@ -129,12 +127,14 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.apply {
+            // rysuje histogram
             for (i in hist.indices) {
                 drawRect(
                     i.toFloat() * pixelsForHist + labelX, a * hist[i] * histScale + b,
                     (i + 1).toFloat() * pixelsForHist + labelX, height.toFloat() - labelY, histPaint
                 )
             }
+            // rysuje oczekiwany rozkład
             if (isFSet) {
                 for (i in (1 until pixelsOfGraph)) {
                     this.drawLine(
@@ -143,6 +143,7 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
                     )
                 }
             }
+            // rysuje obramowanie
             this.drawLine(
                 labelX.toFloat(), 0F, labelX.toFloat(),
                 height.toFloat() - labelY, borderPaint
@@ -157,6 +158,7 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             val rangesText = popupRanges
             val bottomX = popupBottomX
             if (text != null && path != null && posX != null && rangesText != null && bottomX != null){
+                // rysyuje dymek
                 drawPath(path, popupBackgroundPaint)
                 drawText(
                     text,
@@ -164,8 +166,10 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
                     popupTextPaint.textSize + paddingPopup + topMarginPopup - 10F,
                     popupTextPaint
                 )
+                // rysuje zakres na osi X
                 drawText(rangesText, bottomX, height.toFloat(), bottomPaint)
             } else {
+                // rysuje zakres na osi X
                 drawText(displayRangeNumber(minX), 0F, height.toFloat(), bottomPaint)
                 val end = displayRangeNumber(maxX)
                 drawText(
@@ -178,6 +182,13 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    /**
+     * Zlicza ile elementów znajduje się w poszczególnych przedziałach
+     * numOfRanges - liczba predziałów
+     * data - dane do zliczenia
+     * selector - funkcja generująca indeks do zliczenia
+     */
+
     fun countRanges(numOfRanges: Int, data: Array<Float>, selector: (Float) -> Int): Array<Int> {
         val result = Array(numOfRanges) {0}
         for (num in data){
@@ -189,6 +200,9 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         return result
     }
 
+    /**
+     * Przygotowuje dane do wyświetlenia oczekiwanego rozkładu
+     */
     private fun adjustF(){
         pixelsOfGraph = width - labelX
         if (pixelsOfGraph > 0) {
@@ -199,6 +213,9 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    /**
+     * Przygotowuje dane do wyświetlenia histogramu
+     */
     private fun adjustHistogram(){
         val space = width - labelX
         if (space <= 0) return
@@ -219,6 +236,7 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             val min = histogramData.minOrNull()!!
             if (!manualX) {
                 if (max != min) {
+                    //histogram ma wiecej niż 1 wartość
                     minX = min - 0.00001F
                     maxX = max + 0.00001F
                 } else {
@@ -240,6 +258,9 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    /**
+     * Przygotowyje dane do wyścietlenia dymku
+     */
     private fun setPopup(text: String, bottomText: String, x: Float){
         val path = Path()
         val padding = paddingPopup
@@ -274,10 +295,16 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    /**
+     * Ustawia dane do ukrycia dymku
+     */
     private fun unsetPopup(){
         popupText = null
     }
 
+    /**
+     * Na podstwaie pikela na osi X wyznacza odpowiadający mu kolumnę histogramu
+     */
     private fun getHistogram(x: Int): Int? {
         val pos = floor((x - labelX) / pixelsForHist).toInt()
         return if (pos in hist.indices) {
@@ -287,6 +314,9 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    /**
+     * Oblicza zakres wartosci dla wybranej kolomny histogramu
+     */
     private fun getHistogramRanges(pos: Int): Pair<Float, Float>? {
         return if (pos in hist.indices) {
             Pair(minX + pos * histogramStep, minX + (pos + 1) * histogramStep)
