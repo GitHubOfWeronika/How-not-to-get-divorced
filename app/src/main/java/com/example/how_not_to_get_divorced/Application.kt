@@ -22,6 +22,7 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        setBackgroundService()
     }
 
     //Tworzy kanał powiadomień
