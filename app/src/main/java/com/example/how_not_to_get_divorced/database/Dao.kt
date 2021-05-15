@@ -20,6 +20,23 @@ interface  Dao {
     )
     fun getAllAlarmsQuery(query: SupportSQLiteQuery) : LiveData<List<FullAlarm>>
 
+    @RawQuery
+    fun getAllAlarmsQueryRes(query: SupportSQLiteQuery) : List<FullAlarm>
+
+    fun getContinuousAlarmsForNotification() : List<Alarm> {
+        val query = "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 1 AS type " +
+                    "FROM alarm INNER JOIN continuous ON alarm.id = continuous.id WHERE deleted = False AND active = True"
+        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf())
+        return getAllAlarmsQueryRes(simpleSQLiteQuery).map {x -> Mappers.toAlarm(x)}
+    }
+
+    fun getDiscreteAlarmsForNotification() : List<Alarm> {
+        val query = "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 0 AS type " +
+                "FROM alarm INNER JOIN discrete ON alarm.id = discrete.id WHERE deleted = False AND active = True"
+        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf())
+        return getAllAlarmsQueryRes(simpleSQLiteQuery).map {x -> Mappers.toAlarm(x)}
+    }
+
     fun getAllAlarms() : LiveData<List<Alarm>>{
         val query =
             "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 0 AS type " +

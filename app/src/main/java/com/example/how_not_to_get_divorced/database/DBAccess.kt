@@ -48,6 +48,10 @@ class DBAccess(context: Context){
      */
     fun getAllAlarms() = db.getAllAlarms()
 
+    fun getDiscreteAlarmsForNotification() = db.getDiscreteAlarmsForNotification()
+
+    fun getContinuousAlarmsForNotification() = db.getContinuousAlarmsForNotification()
+
     fun insertAlarm(alarm: Alarm) {
         setAlarm(alarm, 0)
     }
