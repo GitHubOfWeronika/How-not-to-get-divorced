@@ -19,6 +19,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#00cc00</item>
+    </style>
+
+
     <style name="Theme.Hownottogetdivorced.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Hownottogetdivorced.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -7,7 +7,7 @@
         android:right="8dp"
         android:bottom="3dp"/>
 
-    <solid android:color="@color/blue_2" />
+    <solid android:color="@color/theme_color_2" />
 
     <corners
         android:bottomLeftRadius="1000dp"
