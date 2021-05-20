@@ -1,22 +1,23 @@
 package com.example.how_not_to_get_divorced.ui.alarms
 
 import android.content.pm.ActivityInfo
-import android.widget.RelativeLayout
-import androidx.cardview.widget.CardView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
+import com.example.how_not_to_get_divorced.database.DBAccess
+import com.example.how_not_to_get_divorced.model.Alarm
 import com.example.how_not_to_get_divorced.model.AlarmRepetition
+import com.example.how_not_to_get_divorced.model.Category
 import com.example.how_not_to_get_divorced.model.Completion
+import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
     private var alarmsList : MutableList<AlarmRecyclerModel> = ArrayList()
@@ -81,6 +82,16 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         else{
             landscapeImageViews(holder)
         }
+
+        holder.switchAlarm.isChecked = item.alarm.active
+
+        holder.switchAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
+                Thread {
+                    var alarm = item.alarm
+                    alarm.active=isChecked
+                    DBAccess(this.fragment.requireContext()).updateAlarm(alarm)
+                }.start()
+        }
     }
 
     private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : Array<Map<Completion, Int>>){
@@ -132,4 +143,5 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         else if(done!! +canceled!!+waiting!!>=2)  imageView.setImageResource(R.drawable.circle_icon4)
         else imageView.setImageResource(R.drawable.circle_icon5)
     }
+
 }
