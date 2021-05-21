@@ -22,6 +22,10 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 abstract class NewAlarmSlider : Fragment() {
     lateinit var root: View
     lateinit var weekdaySliders:Array<Slider> // array of weekdays slider
+    lateinit var mainSlider : Slider
+    lateinit var weekendSwitch: SwitchMaterial
+    var resultToSet : AlarmRepetition? = null
+
     var collapse = true
         set(visible){
             field = !visible
@@ -65,8 +69,8 @@ abstract class NewAlarmSlider : Fragment() {
         for (slider in weekdaySliders) {
             slider.setLabelFormatter(getFormatter())
         }
-        val mainSlider = root.findViewById<Slider>(R.id.discrete_new_alarm_slider)
-        val weekendSwitch = root.findViewById<SwitchMaterial>(R.id.discrete_new_alarm_weekend)
+        mainSlider = root.findViewById(R.id.discrete_new_alarm_slider)
+        weekendSwitch = root.findViewById(R.id.discrete_new_alarm_weekend)
         // sets weekday sliders to match "include weekends" switch
         weekendSwitch.setOnCheckedChangeListener{ _, isChecked ->
             if (isChecked) {
@@ -98,10 +102,22 @@ abstract class NewAlarmSlider : Fragment() {
                 }
             }
         }
+        val resultToSet = resultToSet
+        if (resultToSet != null){
+            setResult(resultToSet)
+        }
         collapse = !collapse
         return root
     }
 
+    fun prepareResult(rep: AlarmRepetition){
+        if(! this::weekendSwitch.isInitialized){
+            resultToSet = rep
+        }
+        else setResult(rep)
+    }
+
     abstract fun getResult() : AlarmRepetition
+    abstract fun setResult(rep: AlarmRepetition)
     abstract fun getFormatter() : LabelFormatter
 }

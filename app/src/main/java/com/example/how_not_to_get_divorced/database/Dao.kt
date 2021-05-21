@@ -23,6 +23,11 @@ interface  Dao {
     @RawQuery
     fun getAllAlarmsQueryRes(query: SupportSQLiteQuery) : List<FullAlarm>
 
+    @RawQuery(
+        observedEntities = [AlarmEntity::class, ContinuousEntity::class, DiscreteEntity::class]
+    )
+    fun getSingleAlarmsQueryRes(query: SupportSQLiteQuery) : LiveData<FullAlarm>
+
     fun getContinuousAlarmsForNotification() : List<Alarm> {
         val query = "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 1 AS type " +
                     "FROM alarm INNER JOIN continuous ON alarm.id = continuous.id WHERE deleted = False AND active = True"
@@ -45,6 +50,16 @@ interface  Dao {
             "FROM alarm INNER JOIN continuous ON alarm.id = continuous.id WHERE deleted = False ORDER BY created"
         val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf())
         return getAllAlarmsQuery(simpleSQLiteQuery).map {x -> x.map {y -> Mappers.toAlarm(y)}}
+    }
+
+    fun getAlarmById(id: Int) : LiveData<Alarm> {
+        val query =
+            "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 0 AS type " +
+            "FROM alarm INNER JOIN discrete ON alarm.id = discrete.id WHERE alarm.id = :id UNION ALL " +
+            "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 1 AS type " +
+            "FROM alarm INNER JOIN continuous ON alarm.id = continuous.id WHERE alarm.id = :id"
+        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(id))
+        return getSingleAlarmsQueryRes(simpleSQLiteQuery).map { x -> Mappers.toAlarm(x) }
     }
 
     @RawQuery(

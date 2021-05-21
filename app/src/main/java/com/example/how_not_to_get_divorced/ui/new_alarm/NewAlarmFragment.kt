@@ -77,7 +77,7 @@ class NewAlarmFragment : Fragment() {
             Thread {
                 DBAccess(requireContext()).insertAlarm(alarm)
             }.start()
-            navController.navigate(R.id.nav_alarms)
+            navController.navigate(R.id.action_nav_new_alarm_to_nav_alarms)
         }
     }
 

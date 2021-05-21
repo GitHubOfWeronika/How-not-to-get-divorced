@@ -46,4 +46,8 @@
     <string name="reminder_type">Reminder type</string>
     <string name="category">Category</string>
     <string name="add_new_reminder">Add new reminder</string>
+    <string name="menu_edit_alarm">Edit alarm</string>
+    <string name="edit_reminder">Edit alarm</string>
+    <string name="delete_edit_alarm">Delete alarm</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -9,7 +9,14 @@
         android:id="@+id/nav_alarms"
         android:name="com.example.how_not_to_get_divorced.ui.alarms.AlarmsFragment"
         android:label="@string/menu_alarms"
-        tools:layout="@layout/fragment_alarms" />
+        tools:layout="@layout/fragment_alarms" >
+        <action
+            android:id="@+id/action_nav_alarms_to_editAlarmFragment"
+            app:destination="@id/editAlarmFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:launchSingleTop="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_new_alarm"
@@ -18,7 +25,10 @@
         tools:layout="@layout/fragment_new_alarm" >
         <action
             android:id="@+id/action_nav_new_alarm_to_nav_alarms"
-            app:destination="@id/nav_alarms" />
+            app:destination="@id/nav_alarms"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -32,4 +42,17 @@
         android:id="@+id/nav_settings"
         android:name="com.example.how_not_to_get_divorced.SettingsFragment"
         android:label="@string/action_settings" />
+    <fragment
+        android:id="@+id/editAlarmFragment"
+        android:name="com.example.how_not_to_get_divorced.ui.new_alarm.EditAlarmFragment"
+        android:label="EditAlarmFragment" >
+        <argument
+            android:name="alarmId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_return_from_alarm"
+            app:destination="@id/nav_alarms"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
 </navigation>

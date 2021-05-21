@@ -50,6 +50,8 @@ class DBAccess(context: Context){
 
     fun getDiscreteAlarmsForNotification() = db.getDiscreteAlarmsForNotification()
 
+    fun getAlarmById(id: Int) = db.getAlarmById(id)
+
     fun getContinuousAlarmsForNotification() = db.getContinuousAlarmsForNotification()
 
     fun insertAlarm(alarm: Alarm) {

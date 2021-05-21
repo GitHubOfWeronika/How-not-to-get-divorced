@@ -1,12 +1,17 @@
 package com.example.how_not_to_get_divorced.ui.alarms
 
 import android.content.pm.ActivityInfo
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
 import com.example.how_not_to_get_divorced.database.DBAccess
@@ -23,6 +28,7 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
     private var alarmsList : MutableList<AlarmRecyclerModel> = ArrayList()
     var fragment : AlarmsFragment = fragment
     var orientation = 0 // 0 for portrait, 1 for landscape
+    var nav: NavController = fragment.findNavController()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var alarmName : TextView
@@ -85,6 +91,12 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
             orientation = 1
             landscapeImageViews(holder)
         }
+
+        holder.alarmName.setOnClickListener {
+            val bundle = bundleOf("alarmId" to item.alarm.id)
+            nav.navigate(R.id.action_nav_alarms_to_editAlarmFragment, bundle)
+        }
+
         setStatistics(holder,item.alarm.repetition,item.statistics)
 
         holder.switchAlarm.isChecked = item.alarm.active
@@ -155,11 +167,11 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
     }
 
     fun setContinuousStatisticImage(imageView: ImageView, done: Int?, canceled: Int?, waiting: Int?){
+        Log.d("recykler_test", waiting!!.toString());
         if(done!! +canceled!!+waiting!!>=32)  imageView.setImageResource(R.drawable.circle_icon1)
         else if(done!! +canceled!!+waiting!!>=16)  imageView.setImageResource(R.drawable.circle_icon2)
         else if(done!! +canceled!!+waiting!!>=8)  imageView.setImageResource(R.drawable.circle_icon3)
         else if(done!! +canceled!!+waiting!!>=2)  imageView.setImageResource(R.drawable.circle_icon4)
         else imageView.setImageResource(R.drawable.circle_icon5)
     }
-
 }
