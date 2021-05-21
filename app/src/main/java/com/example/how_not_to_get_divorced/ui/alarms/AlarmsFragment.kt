@@ -41,13 +41,13 @@ class AlarmsFragment : Fragment() {
             alarmModelsList.clear() // Czyślimy obecną listę żeby wypełnić ją na nowo
             alarmAdapter.setTasks(alarmModelsList) // podpinamy listę do recykler view
             it.forEach {alarm -> //dla każdego alarmu
-                val alarmModel = AlarmRecyclerModel(alarm, Array(10) { mutableMapOf(
+                val alarmModel = AlarmRecyclerModel(alarm, Array(20) { mutableMapOf(
                         Completion.DONE to 0,
                         Completion.FAILED to 0,
                         Completion.WAITING to 0)
                 }) //Tworzymy tutaj model dla naszego alarmu, w placeholderem dla ststystyk (normalnie dałbym tu emptyArray())
                 alarmModelsList.add(alarmModel) //Dodajemy go na liste
-                (db.getStatistics(alarm,getDaysAgo(10))).observe(viewLifecycleOwner,androidx.lifecycle.Observer { stat -> // Obserwujemy teraz sttystyki
+                (db.getStatistics(alarm,getDaysAgo(20))).observe(viewLifecycleOwner,androidx.lifecycle.Observer { stat -> // Obserwujemy teraz sttystyki
                     alarmModel.statistics = stat // podpinamy nowe ststyskyki dla naszego modelu
                     alarmAdapter.notifyDataSetChanged() // informujemy recykler view że coś się zmieniło
                 })
