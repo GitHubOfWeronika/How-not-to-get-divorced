@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
 import com.example.how_not_to_get_divorced.database.DBAccess
+import com.example.how_not_to_get_divorced.model.Completion
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,12 +38,18 @@ class AlarmsFragment : Fragment() {
 
         val db = DBAccess(requireContext())
         db.getAllAlarms().observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
-            alarmModelsList.clear()
-            it.forEach {alarm ->
-                (db.getStatistics(alarm,getDaysAgo(20))).observe(viewLifecycleOwner,androidx.lifecycle.Observer {
-                    alarmModelsList.add(AlarmRecyclerModel(alarm, it))
-                    alarmAdapter.setTasks(alarmModelsList)
-                    alarmAdapter.notifyDataSetChanged()
+            alarmModelsList.clear() // Czyślimy obecną listę żeby wypełnić ją na nowo
+            alarmAdapter.setTasks(alarmModelsList) // podpinamy listę do recykler view
+            it.forEach {alarm -> //dla każdego alarmu
+                val alarmModel = AlarmRecyclerModel(alarm, Array(10) { mutableMapOf(
+                        Completion.DONE to 0,
+                        Completion.FAILED to 0,
+                        Completion.WAITING to 0)
+                }) //Tworzymy tutaj model dla naszego alarmu, w placeholderem dla ststystyk (normalnie dałbym tu emptyArray())
+                alarmModelsList.add(alarmModel) //Dodajemy go na liste
+                (db.getStatistics(alarm,getDaysAgo(10))).observe(viewLifecycleOwner,androidx.lifecycle.Observer { stat -> // Obserwujemy teraz sttystyki
+                    alarmModel.statistics = stat // podpinamy nowe ststyskyki dla naszego modelu
+                    alarmAdapter.notifyDataSetChanged() // informujemy recykler view że coś się zmieniło
                 })
             }
         })
