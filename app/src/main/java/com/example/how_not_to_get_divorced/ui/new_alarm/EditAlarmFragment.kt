@@ -1,6 +1,9 @@
 package com.example.how_not_to_get_divorced.ui.new_alarm
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper.myLooper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +23,7 @@ import com.example.how_not_to_get_divorced.ui.customSpinner.CustomAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
+
 
 class EditAlarmFragment : Fragment() {
     private lateinit var root: View
@@ -63,19 +67,24 @@ class EditAlarmFragment : Fragment() {
         val arguments = arguments
         if (arguments != null){
             alarmId = arguments.getInt("alarmId")
-            db.getAlarmById(alarmId).observe(viewLifecycleOwner, androidx.lifecycle.Observer { alarm ->
-                this.alarm = alarm
-                root.findViewById<TextInputEditText>(R.id.edit_alarm_name).setText(alarm.name)
-                root.findViewById<Spinner>(R.id.edit_alarm_category).setSelection(CATEGORIES_LIST.indexOf(alarm.category))
-                pagerAdapter.setResult(alarm.repetition)
-                Thread {
-                    Thread.sleep(50)
-                    when (alarm.repetition) {
-                        is AlarmRepetition.Continuous -> viewPager.currentItem = 1
-                        is AlarmRepetition.Discrete -> viewPager.currentItem = 0
-                    }
-                }.start()
-            })
+            db.getAlarmById(alarmId).observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer { alarm ->
+                    this.alarm = alarm
+                    root.findViewById<TextInputEditText>(R.id.edit_alarm_name).setText(alarm.name)
+                    root.findViewById<Spinner>(R.id.edit_alarm_category).setSelection(
+                        CATEGORIES_LIST.indexOf(
+                            alarm.category
+                        )
+                    )
+                    pagerAdapter.setResult(alarm.repetition)
+                    Handler(myLooper()!!).postDelayed({
+                        when (alarm.repetition) {
+                            is AlarmRepetition.Continuous -> viewPager.currentItem = 1
+                            is AlarmRepetition.Discrete -> viewPager.currentItem = 0
+                        }
+                    }, 300)
+                })
         }
 
         root.findViewById<Button>(R.id.edit_alarm).setOnClickListener { editAlarm() }
@@ -125,7 +134,15 @@ class EditAlarmFragment : Fragment() {
             Toast.makeText(requireContext(), "It will never trigger", Toast.LENGTH_SHORT).show()
             return null
         } else {
-            return Alarm(alarmId, name, category, repetition, alarm.active, alarm.deleted, alarm.created)
+            return Alarm(
+                alarmId,
+                name,
+                category,
+                repetition,
+                alarm.active,
+                alarm.deleted,
+                alarm.created
+            )
         }
     }
 }
