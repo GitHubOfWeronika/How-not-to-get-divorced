@@ -22,6 +22,7 @@ import kotlin.collections.ArrayList
 class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
     private var alarmsList : MutableList<AlarmRecyclerModel> = ArrayList()
     var fragment : AlarmsFragment = fragment
+    var orientation = 0 // 0 for portrait, 1 for landscape
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var alarmName : TextView
@@ -75,13 +76,16 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item : AlarmRecyclerModel = alarmsList[position]
         holder.alarmName.text=item.alarm.name
-        setStatistics(holder,item.alarm.repetition,item.statistics)
+
         if(fragment.activity?.resources?.configuration?.orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            orientation = 0
             portraitImageViews(holder)
         }
         else{
+            orientation = 1
             landscapeImageViews(holder)
         }
+        setStatistics(holder,item.alarm.repetition,item.statistics)
 
         holder.switchAlarm.isChecked = item.alarm.active
 
@@ -96,13 +100,27 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
 
     private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : Array<Map<Completion, Int>>){
         if(repetition.getType()=="Discrete"){
-            for(i in 0 until holder.imageViewDayArray.size){
-                setDiscreteStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.WAITING])
+            if(orientation==1) {
+                for (i in 0 until holder.imageViewDayArray.size) {
+                    setDiscreteStatisticImage(holder.imageViewDayArray[i], statistics[20 - i - 1][Completion.DONE], statistics[20 - i - 1][Completion.FAILED], statistics[20 - i - 1][Completion.WAITING])
+                }
+            }
+            else{
+                for (i in 0 until 10) {
+                    setDiscreteStatisticImage(holder.imageViewDayArray[i], statistics[10 - i - 1][Completion.DONE], statistics[10 - i - 1][Completion.FAILED], statistics[10 - i - 1][Completion.WAITING])
+                }
             }
         }
         if (repetition.getType()=="Continuous"){
-            for(i in 0 until holder.imageViewDayArray.size){
-                setContinuousStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.WAITING])
+            if(orientation==1) {
+                for (i in 0 until holder.imageViewDayArray.size) {
+                    setContinuousStatisticImage(holder.imageViewDayArray[i], statistics[20 - i - 1][Completion.DONE], statistics[20 - i - 1][Completion.FAILED], statistics[20 - i - 1][Completion.WAITING])
+                }
+            }
+            else{
+                for(i in 0 until 10){
+                    setContinuousStatisticImage(holder.imageViewDayArray[i], statistics[10 - i - 1][Completion.DONE], statistics[10 - i - 1][Completion.FAILED], statistics[10 - i - 1][Completion.WAITING])
+                }
             }
         }
 
@@ -132,7 +150,7 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
     }
 
     fun setDiscreteStatisticImage(imageView: ImageView, done: Int?, canceled: Int?, waiting: Int?){
-        if(done!! +canceled!!+waiting!!>=1)  imageView.setImageResource(R.drawable.square_icon1)
+        if(done!! +canceled!!+waiting!!>=1)  imageView.setImageResource(R.drawable.square_icon2)
         else imageView.setImageResource(R.drawable.square_icon5)
     }
 
