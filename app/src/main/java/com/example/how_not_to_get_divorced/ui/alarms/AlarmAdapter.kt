@@ -97,12 +97,12 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
     private fun setStatistics(holder: ViewHolder,repetition: AlarmRepetition, statistics : Array<Map<Completion, Int>>){
         if(repetition.getType()=="Discrete"){
             for(i in 0 until holder.imageViewDayArray.size){
-                setDiscreteStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED])
+                setDiscreteStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.WAITING])
             }
         }
         if (repetition.getType()=="Continuous"){
             for(i in 0 until holder.imageViewDayArray.size){
-                setContinuousStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED])
+                setContinuousStatisticImage(holder.imageViewDayArray[i],statistics[holder.imageViewDayArray.size - i - 1][Completion.DONE],statistics[holder.imageViewDayArray.size - i-1][Completion.FAILED],statistics[holder.imageViewDayArray.size - i-1][Completion.WAITING])
             }
         }
 
