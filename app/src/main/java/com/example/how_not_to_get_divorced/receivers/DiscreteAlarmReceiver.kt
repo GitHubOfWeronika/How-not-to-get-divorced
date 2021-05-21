@@ -18,15 +18,15 @@ class DiscreteAlarmReceiver : BroadcastReceiver(){
         val dayOfWeek = LocalDate.now().dayOfWeek
         val db = DBAccess(context)
         Thread {
-            for (alarm in db.getContinuousAlarmsForNotification()) {
+            for (alarm in db.getDiscreteAlarmsForNotification()) {
                 val chance = when (dayOfWeek){
-                    DayOfWeek.MONDAY -> (alarm.repetition as AlarmRepetition.Continuous).monday
-                    DayOfWeek.TUESDAY -> (alarm.repetition as AlarmRepetition.Continuous).tuesday
-                    DayOfWeek.WEDNESDAY -> (alarm.repetition as AlarmRepetition.Continuous).wednesday
-                    DayOfWeek.THURSDAY -> (alarm.repetition as AlarmRepetition.Continuous).thursday
-                    DayOfWeek.FRIDAY -> (alarm.repetition as AlarmRepetition.Continuous).friday
-                    DayOfWeek.SATURDAY -> (alarm.repetition as AlarmRepetition.Continuous).saturday
-                    DayOfWeek.SUNDAY -> (alarm.repetition as AlarmRepetition.Continuous).sunday
+                    DayOfWeek.MONDAY -> (alarm.repetition as AlarmRepetition.Discrete).monday
+                    DayOfWeek.TUESDAY -> (alarm.repetition as AlarmRepetition.Discrete).tuesday
+                    DayOfWeek.WEDNESDAY -> (alarm.repetition as AlarmRepetition.Discrete).wednesday
+                    DayOfWeek.THURSDAY -> (alarm.repetition as AlarmRepetition.Discrete).thursday
+                    DayOfWeek.FRIDAY -> (alarm.repetition as AlarmRepetition.Discrete).friday
+                    DayOfWeek.SATURDAY -> (alarm.repetition as AlarmRepetition.Discrete).saturday
+                    DayOfWeek.SUNDAY -> (alarm.repetition as AlarmRepetition.Discrete).sunday
                 }
                 if (Random.nextFloat() < chance){ // losowanie
                     fireAlarm(alarm, db, context)
