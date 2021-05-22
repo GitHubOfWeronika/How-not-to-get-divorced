@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.preference.PreferenceManager
 import com.example.how_not_to_get_divorced.Application
 import com.example.how_not_to_get_divorced.database.DBAccess
 import com.example.how_not_to_get_divorced.model.Alarm
@@ -14,11 +15,15 @@ import java.time.*
 import kotlin.random.Random
 
 class ContinuousAlarmReceiver: BroadcastReceiver() {
-    val dayBegin = 8 * 3600 // początke dnia w sekundach
-    val dayEnd = 20 * 3600 // koniec dnia w sekunadch
     val period = 5 * 60 // okres pomiędzy wywołaniami
-    val firingPerDay = (dayEnd - dayBegin) / period // ilosć wywołań na dzień
+
     override fun onReceive(context: Context, intent: Intent) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val dayBegin = preferences.getInt("continuous_start", 8 * 3600) // początke dnia w sekundach
+        val dayEnd = preferences.getInt("continuous_end", 22 * 3600)  // koniec dnia w sekunadch
+
+        val firingPerDay = (dayEnd - dayBegin) / period // ilosć wywołań na dzień
+
         val dayOfWeek = LocalDate.now().dayOfWeek
         val nowZoned = ZonedDateTime.now()
         val midnight = nowZoned.toLocalDate().atStartOfDay(nowZoned.zone).toInstant()
