@@ -92,10 +92,17 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
             landscapeImageViews(holder)
         }
 
+        //TODO: Make this better
         holder.alarmName.setOnClickListener {
             val bundle = bundleOf("alarmId" to item.alarm.id)
             nav.navigate(R.id.getStat, bundle)
         }
+
+        //TODO: Fragment to access edit alarm
+        /*holder.alarmName.setOnClickListener {
+            val bundle = bundleOf("alarmId" to item.alarm.id)
+            nav.navigate(R.id.action_nav_alarms_to_editAlarmFragment, bundle)
+        }*/
 
         setStatistics(holder,item.alarm.repetition,item.statistics)
 
