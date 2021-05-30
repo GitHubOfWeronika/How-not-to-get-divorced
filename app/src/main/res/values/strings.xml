@@ -53,4 +53,6 @@
     <string name="time_of_alarms">Time of alarms</string>
     <string name="time_of_completion">Time of completion</string>
     <string name="alarms_per_day">Alarms per day</string>
+    <string name="global_statistics">Global statistics</string>
+    <string name="statistics">Statistics</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.statistics.StatisticsFragment">
+    tools:context=".ui.alarm_statistics.AlarmStatistics">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="43dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/global_statistics"
+                android:text="@string/statistics"
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -48,6 +48,7 @@
             android:padding="30sp">
 
             <TextView
+                android:id="@+id/text_time_of_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
@@ -58,6 +59,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="300sp"
                 app:color="@color/purple_200" />
+
+            <TextView
+                android:id="@+id/text_time_of_success"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:paddingTop="8sp"
+                android:text="@string/time_of_alarms" />
+
+            <com.example.how_not_to_get_divorced.view.Histogram
+                android:id="@+id/hist_time_of_success"
+                android:layout_width="wrap_content"
+                android:layout_height="300sp"
+                app:color="@color/dark_green" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -87,4 +102,5 @@
                 app:histogramStep="1.0" />
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

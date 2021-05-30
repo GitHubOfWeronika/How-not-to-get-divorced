@@ -94,7 +94,7 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
 
         holder.alarmName.setOnClickListener {
             val bundle = bundleOf("alarmId" to item.alarm.id)
-            nav.navigate(R.id.action_nav_alarms_to_editAlarmFragment, bundle)
+            nav.navigate(R.id.getStat, bundle)
         }
 
         setStatistics(holder,item.alarm.repetition,item.statistics)

@@ -106,7 +106,7 @@ interface  Dao {
     fun getTimeOfTasks(alarmId: Int?, status: List<Int>) : LiveData<List<Long>>{
         var query = "SELECT ((date % 86400) / 60) AS time FROM task WHERE "
         return if (alarmId != null){
-            query += "alarm = :alarm AND completion IN (\"+listToString(status)+\")"
+            query += "alarm = :alarm AND completion IN ("+listToString(status)+")"
             val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(alarmId))
             getLongQuery(simpleSQLiteQuery)//.map{x -> x.map {y -> y.v}}
         } else {

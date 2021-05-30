@@ -12,4 +12,9 @@
     <color name="theme_color_3">#4E7AC7</color>
     <color name="theme_color_4">#7FB2F0</color>
     <color name="theme_color_5">#ADD5F7</color>
+    <color name="green">#90D145</color>
+    <color name="dark_green">#035C00</color>
+    <color name="red">#EC3030</color>
+    <color name="blue">#0021FF</color>
+    <color name="orange">#FF9800</color>
 </resources>

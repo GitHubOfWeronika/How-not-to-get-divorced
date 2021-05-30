@@ -16,6 +16,11 @@
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/getStat"
+            app:destination="@id/alarmStatistics"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
     </fragment>
 
     <fragment
@@ -51,6 +56,20 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_return_from_alarm"
+            app:destination="@id/nav_alarms"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmStatistics"
+        android:name="com.example.how_not_to_get_divorced.ui.alarm_statistics.AlarmStatistics"
+        android:label="alarm_statistics_fragment"
+        tools:layout="@layout/alarm_statistics_fragment" >
+        <argument
+            android:name="alarmId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/returnFromStat"
             app:destination="@id/nav_alarms"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit" />
