@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30sp"
     tools:context=".ui.statistics.StatisticsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30sp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_of_alarms"/>
+        <com.example.how_not_to_get_divorced.view.Histogram
+            android:id="@+id/hist_time_of_day"
+            android:layout_width="wrap_content"
+            android:layout_height="300sp"
+            app:color="@color/teal_700" />
 
-    <com.example.how_not_to_get_divorced.view.Histogram
-        android:id="@+id/histogram"
-        android:layout_width="wrap_content"
-        android:layout_height="300sp"
-        app:color="@color/purple_700"
-        app:histogramStep="0.20"
-        app:maxX="3.0"
-        app:minX="-3.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_of_completion"/>
+
+        <com.example.how_not_to_get_divorced.view.Histogram
+            android:id="@+id/hist_time_to_completion"
+            android:layout_width="wrap_content"
+            android:layout_height="300sp"
+            app:color="@color/teal_700" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarms_per_day"/>
+
+        <com.example.how_not_to_get_divorced.view.Histogram
+            android:id="@+id/hist_alarms_per_day"
+            android:layout_width="wrap_content"
+            android:layout_height="300sp"
+            app:histogramStep="1.0"
+            app:color="@color/teal_700" />
+    </LinearLayout>
+</ScrollView>

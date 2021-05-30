@@ -15,7 +15,7 @@ import java.util.*
 /**
  * Class to access application database
  */
-class DBAccess(context: Context){
+class DBAccess(context: Context) {
     val db = Room.databaseBuilder(
         context,
         AppDatabase::class.java, "database-name"
@@ -43,6 +43,12 @@ class DBAccess(context: Context){
         throw Exception("No id in alarm")
     }
 
+    fun getAllStatistics(until: Date): LiveData<Array<Map<Completion, Int>>> {
+        return db.getAllStatistics(until.time / 1000L).map {
+            Mappers.statisticsToArray(it, until)
+        }
+    }
+
     /**
      * List of all not deleted alarms
      */
@@ -58,26 +64,36 @@ class DBAccess(context: Context){
         setAlarm(alarm, 0)
     }
 
+    fun getTimeOfTasks(alarmId: Int?, status: List<Int>) = db.getTimeOfTasks(alarmId, status)
+
+    fun getTimeToFinish(alarmId: Int?) = db.getTimeToFinish(alarmId)
+
     fun updateAlarm(alarm: Alarm) {
         var id = 0
         val currentId = alarm.id
-        if (currentId != null){
+        if (currentId != null) {
             id = currentId
             val continuous = db.getContinuous(id)
-            if(continuous != null){
+            if (continuous != null) {
                 db.deleteContinuous(continuous)
             }
             val discrete = db.getDiscrete(id)
-            if(discrete != null){
+            if (discrete != null) {
                 db.deleteDiscrete(discrete)
             }
         }
         setAlarm(alarm, id)
     }
 
-    private fun setAlarm(alarm: Alarm, id: Int){
+    fun getFirstAlarmDate() = db.getFirstAlarmDate().map {
+        val d = Date()
+        d.time = it * 1000L
+        d
+    }
+
+    private fun setAlarm(alarm: Alarm, id: Int) {
         val oldRepetition = alarm.repetition;
-        when (oldRepetition){
+        when (oldRepetition) {
             is AlarmRepetition.Discrete -> {
                 val alarmEntity = AlarmEntity(
                     id,
@@ -87,7 +103,7 @@ class DBAccess(context: Context){
                     alarm.deleted,
                     alarm.created.time / 1000L
                 )
-                val newId = if (id == 0){
+                val newId = if (id == 0) {
                     val rowId = db.insertAlarm(alarmEntity)
                     val insertedAlarm = db.getAlarmByRowId(rowId)
                     insertedAlarm.id
@@ -116,7 +132,7 @@ class DBAccess(context: Context){
                     alarm.deleted,
                     alarm.created.time / 1000L
                 )
-                val newId = if (id == 0){
+                val newId = if (id == 0) {
                     val rowId = db.insertAlarm(alarmEntity)
                     val insertedAlarm = db.getAlarmByRowId(rowId)
                     insertedAlarm.id
@@ -144,7 +160,7 @@ class DBAccess(context: Context){
      */
     fun getAllTaskForADay(date: Date) = db.getAllTasksForDay(date)
 
-    fun updateTest(task: Task){
+    fun updateTest(task: Task) {
         if (task.id != null && task.alarm.id != null) {
             db.updateTask(
                 TaskEntity(
@@ -158,7 +174,7 @@ class DBAccess(context: Context){
         }
     }
 
-    fun insertTask(task: Task){
+    fun insertTask(task: Task) {
         if (task.alarm.id != null) {
             db.insertTask(
                 TaskEntity(
@@ -171,5 +187,4 @@ class DBAccess(context: Context){
             )
         }
     }
-
 }

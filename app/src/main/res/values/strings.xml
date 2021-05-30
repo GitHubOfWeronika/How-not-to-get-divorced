@@ -50,4 +50,7 @@
     <string name="edit_reminder">Edit alarm</string>
     <string name="delete_edit_alarm">Delete alarm</string>
     <string name="cancel">Cancel</string>
+    <string name="time_of_alarms">Time of alarms</string>
+    <string name="time_of_completion">Time of completion</string>
+    <string name="alarms_per_day">Alarms per day</string>
 </resources>

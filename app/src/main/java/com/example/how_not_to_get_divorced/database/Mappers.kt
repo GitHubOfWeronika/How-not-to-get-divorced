@@ -102,6 +102,33 @@ class Mappers {
             }
         }
 
+        fun <A>listToString(l: List<A>): String{
+            return if (l.isEmpty()) ""
+            else {
+                var res = l[0].toString()
+                for (i in 1 until l.size){
+                    res += ", "+l[i].toString()
+                }
+                res
+            }
+        }
+
+        fun intToTime(t: Int): String{
+            val h = t / 60
+            val m = t % 60
+            var res = if (h <= 9) {
+                "0$h:"
+            } else {
+                "$h:"
+            }
+            res += if (m <= 9) {
+                "0$m"
+            } else {
+                "$m"
+            }
+            return res
+        }
+
         fun daysInPast(date: String): Int{
             val diff: Long = Date().time - SimpleDateFormat("yyyy-MM-dd").parse(date)!!.time
             return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS).toInt()

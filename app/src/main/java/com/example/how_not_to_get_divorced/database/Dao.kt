@@ -7,8 +7,11 @@ import androidx.room.*
 import androidx.room.Dao
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQueryBuilder
+import com.example.how_not_to_get_divorced.database.Mappers.Companion.listToString
 import com.example.how_not_to_get_divorced.database.entities.*
 import com.example.how_not_to_get_divorced.model.Alarm
+import com.example.how_not_to_get_divorced.model.Completion
 import com.example.how_not_to_get_divorced.model.Task
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +30,21 @@ interface  Dao {
         observedEntities = [AlarmEntity::class, ContinuousEntity::class, DiscreteEntity::class]
     )
     fun getSingleAlarmsQueryRes(query: SupportSQLiteQuery) : LiveData<FullAlarm>
+
+    @RawQuery(
+        observedEntities = [AlarmEntity::class, ContinuousEntity::class, DiscreteEntity::class, TaskEntity::class]
+    )
+    fun getAllTasksForDayQuery(query: SupportSQLiteQuery) : LiveData<List<FullTask>>
+
+    @RawQuery(
+        observedEntities = [TaskEntity::class]
+    )
+    fun getStatisticsQuery(query: SupportSQLiteQuery) : LiveData<List<TasksStatistics>>
+
+    @RawQuery(
+        observedEntities = [TaskEntity::class]
+    )
+    fun getLongQuery(query: SupportSQLiteQuery) : LiveData<List<Long>>
 
     fun getContinuousAlarmsForNotification() : List<Alarm> {
         val query = "SELECT alarm.*, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 1 AS type " +
@@ -62,11 +80,6 @@ interface  Dao {
         return getSingleAlarmsQueryRes(simpleSQLiteQuery).map { x -> Mappers.toAlarm(x) }
     }
 
-    @RawQuery(
-        observedEntities = [AlarmEntity::class, ContinuousEntity::class, DiscreteEntity::class, TaskEntity::class]
-    )
-    fun getAllTasksForDayQuery(query: SupportSQLiteQuery) : LiveData<List<FullTask>>
-
     fun getAllTasksForDay(date: Date) : LiveData<List<Task>>{
         val query =
             "SELECT task.*, name, category, active, deleted, created, monday, tuesday, wednesday, thursday, friday, saturday, sunday, 0 AS type " +
@@ -81,11 +94,6 @@ interface  Dao {
         return getAllTasksForDayQuery(simpleSQLiteQuery).map {x -> x.map {y -> Mappers.toTask(y)}}
     }
 
-    @RawQuery(
-        observedEntities = [TaskEntity::class]
-    )
-    fun getStatisticsQuery(query: SupportSQLiteQuery) : LiveData<List<TasksStatistics>>
-
     fun getStatistics(alarmId: Int, until: Long) : LiveData<List<TasksStatistics>>{
         val query =
             "SELECT SUBSTR(DATETIME(task.date, 'unixepoch', 'localtime'), 1, 10) AS date, completion " +
@@ -95,18 +103,42 @@ interface  Dao {
         return getStatisticsQuery(simpleSQLiteQuery)
     }
 
-    @RawQuery(
-        observedEntities = [TaskEntity::class]
-    )
-    fun getTimeStatisticsQuery(query: SupportSQLiteQuery) : LiveData<List<Long>>
-
-    fun getTimeStatistics(alarmId: Int, until: Long, completion: Int) : LiveData<List<Long>>{
-        val query =
-            "SELECT changed - date FROM task " +
-            "WHERE alarm = :id AND task.date >= :until AND changed IS NOT NULL AND completion = :completion"
-        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(alarmId, until, completion))
-        return getTimeStatisticsQuery(simpleSQLiteQuery)
+    fun getTimeOfTasks(alarmId: Int?, status: List<Int>) : LiveData<List<Long>>{
+        var query = "SELECT ((date % 86400) / 60) AS time FROM task WHERE "
+        return if (alarmId != null){
+            query += "alarm = :alarm AND completion IN (\"+listToString(status)+\")"
+            val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(alarmId))
+            getLongQuery(simpleSQLiteQuery)//.map{x -> x.map {y -> y.v}}
+        } else {
+            query += "completion IN ("+listToString(status)+")"
+            val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf())
+            getLongQuery(simpleSQLiteQuery)//.map{x -> x.map {y -> y.v}}
+        }
     }
+
+    fun getTimeToFinish(alarmId: Int?) : LiveData<List<Long>>{
+        var query = "SELECT ((changed - date) / 60) FROM task WHERE changed IS NOT NULL AND completion = " + Completion.DONE.id
+        return if (alarmId != null){
+            query += " AND alarm = :alarm"
+            val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(alarmId))
+            getLongQuery(simpleSQLiteQuery)//.map{x -> x.map {y -> y.v}}
+        } else {
+            val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf())
+            getLongQuery(simpleSQLiteQuery)//.map{x -> x.map {y -> y.v}}
+        }
+    }
+
+    fun getAllStatistics(until: Long) : LiveData<List<TasksStatistics>>{
+        val query =
+            "SELECT SUBSTR(DATETIME(task.date, 'unixepoch', 'localtime'), 1, 10) AS date, completion " +
+                    "FROM task " +
+                    "WHERE task.date >= :until "
+        val simpleSQLiteQuery = SimpleSQLiteQuery(query, arrayOf(until))
+        return getStatisticsQuery(simpleSQLiteQuery)
+    }
+
+    @Query("SELECT MIN(created) FROM alarm")
+    fun getFirstAlarmDate() : LiveData<Long>
 
     @Update
     fun updateTask(task: TaskEntity)

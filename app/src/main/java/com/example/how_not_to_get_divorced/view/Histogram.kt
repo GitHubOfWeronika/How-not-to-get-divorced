@@ -47,13 +47,7 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
     }
     private val topMarginPopup = 20F // Odkegłość dymka od górnej granicy
     private val paddingPopup = 50F // Padding w dymku
-    var histogramStep = 0.5F // Określa jaki przedział obejmuje pojedyńczy słupek w histogramie
-        set(v){
-            field = v
-            manualStep = true
-            adjustHistogram()
-            invalidate()
-        }
+    private var histogramStep = 0.5F // Określa jaki przedział obejmuje pojedyńczy słupek w histogramie
     private var manualStep = false // czy histogramStep oztsał ustwainy przez użytkowika, czy jest automatyczny
     private var pixelsForHist = 1F // Liczba pikseli na jeden słupek histogramu
     private var hist = arrayOf(0) // wyskokości w histogramie
@@ -66,22 +60,8 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
     private var histScale : Float = 1.0F / (hist.sum() * 0.5F) // dostosowuje wysokość wistogramu do wysokości oczekiwanego rozkłądu
     private val labelX = 12 // pixele na margines po lewej
     private val labelY = 60 // pixele na margines w dole
-    var minX = 0F // zakres wyświetlania wykresu na osi X
-        set(v){
-            field = v
-            manualX = true
-            adjustHistogram()
-            if (isFSet) adjustF()
-            invalidate()
-        }
-    var maxX = 1F
-        set(v){
-            field = v
-            manualX = true
-            adjustHistogram()
-            if (isFSet) adjustF()
-            invalidate()
-        }
+    private var minX = 0F // zakres wyświetlania wykresu na osi X
+    private var maxX = 1F
     private var manualX = false // czy zakres x postał ustawiny ręcznie
     private val minY = 0F // zakres wyświetlania wykresu na osi Y
     private var maxY = 4F
@@ -105,12 +85,15 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             color = c
             if (attr.hasValue(R.styleable.Histogram_histogramStep)){
                 histogramStep = attr.getFloat(R.styleable.Histogram_histogramStep, 1.0F)
+                manualStep = true
             }
             if (attr.hasValue(R.styleable.Histogram_maxX)){
                 maxX =  attr.getFloat(R.styleable.Histogram_maxX, 1.0F)
+                manualX = true
             }
             if (attr.hasValue(R.styleable.Histogram_minX)){
                 minX =  attr.getFloat(R.styleable.Histogram_minX, 1.0F)
+                manualX = true
             }
         } finally {
             attr.recycle()
@@ -122,6 +105,22 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
         popupBackgroundPaint.color = Color.DKGRAY
         bottomPaint.color = Color.DKGRAY
         bottomPaint.textSize = 60F
+    }
+
+    fun setXAxis(max: Float, min: Float){
+        maxX = max
+        minX = min
+        manualX = true
+        adjustHistogram()
+        if (isFSet) adjustF()
+        invalidate()
+    }
+
+    fun setStep(step: Float){
+        histogramStep = step
+        manualStep = true
+        adjustHistogram()
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -237,11 +236,11 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             if (!manualX) {
                 if (max != min) {
                     //histogram ma wiecej niż 1 wartość
-                    minX = min - 0.00001F
-                    maxX = max + 0.00001F
+                    minX = min - 0.001F
+                    maxX = max + 0.001F
                 } else {
-                    minX = 0.00001F
-                    maxX = max + 0.00001F
+                    minX = 0.001F
+                    maxX = max + 0.01F
                 }
             }
             val range = maxX - minX
@@ -255,6 +254,8 @@ class Histogram(context: Context, attributeSet: AttributeSet) : View(context, at
             histScale = 1.0F / (histogramData.size * histogramStep)
             maxY = hist.maxOrNull()!! * histScale * 1.1F
             pixelsForHist = space.toFloat() / steps.toFloat()
+            a = (height-labelY-4)/(minY - maxY)
+            b = -a * maxY
         }
     }
 
