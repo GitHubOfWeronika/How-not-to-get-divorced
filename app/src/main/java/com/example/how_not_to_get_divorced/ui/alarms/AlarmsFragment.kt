@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
 import com.example.how_not_to_get_divorced.database.DBAccess
 import com.example.how_not_to_get_divorced.model.Completion
+import com.example.how_not_to_get_divorced.ui.utils.SwipeToEdit
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -35,6 +37,9 @@ class AlarmsFragment : Fragment() {
         alarmAdapter= AlarmAdapter(this)
         alarmAdapter.fragment=this
         alarmsRecyclerView.adapter=alarmAdapter
+
+        var swipeToDeleteHelper = ItemTouchHelper(SwipeToEdit(alarmAdapter))
+        swipeToDeleteHelper.attachToRecyclerView(alarmsRecyclerView)
 
         val db = DBAccess(requireContext())
         db.getAllAlarms().observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->

@@ -79,6 +79,10 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         return alarmsList.size
     }
 
+    fun getAlarmId(position : Int) : Int{
+        return alarmsList[position].alarm.id!!
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item : AlarmRecyclerModel = alarmsList[position]
         holder.alarmName.text=item.alarm.name
@@ -93,16 +97,18 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         }
 
         //TODO: Make this better
-        holder.alarmName.setOnClickListener {
-            val bundle = bundleOf("alarmId" to item.alarm.id)
-            nav.navigate(R.id.getStat, bundle)
-        }
+
 
         //TODO: Fragment to access edit alarm
         /*holder.alarmName.setOnClickListener {
             val bundle = bundleOf("alarmId" to item.alarm.id)
+            nav.navigate(R.id.getStat, bundle)
+        }
+        holder.alarmName.setOnClickListener {
+            val bundle = bundleOf("alarmId" to item.alarm.id)
             nav.navigate(R.id.action_nav_alarms_to_editAlarmFragment, bundle)
         }*/
+
 
         setStatistics(holder,item.alarm.repetition,item.statistics)
 
