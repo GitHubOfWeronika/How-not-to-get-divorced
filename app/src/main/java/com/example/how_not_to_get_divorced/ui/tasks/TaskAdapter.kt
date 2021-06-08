@@ -68,7 +68,9 @@ class TaskAdapter(fragment: TaskFragment) : RecyclerView.Adapter<TaskAdapter.Vie
         if(item.completion==Completion.DONE){
             holder.container.setBackgroundColor(Color.argb(0.2f,0.0f,1.0f,0.0f))
         }
-
+        if (item.completion==Completion.WAITING){
+            holder.container.setBackgroundColor(Color.TRANSPARENT)
+        }
         holder.taskCancel.setOnClickListener(){
             if(item.completion!=Completion.FAILED){
                 item.completion=Completion.FAILED
