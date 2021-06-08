@@ -13,6 +13,7 @@
     <string name="menu_statistics">Statistics</string>
     <string name="menu_alarms">Reminders</string>
     <string name="menu_new_alarm">Create new reminder</string>
+    <string name="menu_tasks">Tasks</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -55,4 +56,6 @@
     <string name="alarms_per_day">Alarms per day</string>
     <string name="global_statistics">Global statistics</string>
     <string name="statistics">Statistics</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,27 +1,20 @@
 package com.example.how_not_to_get_divorced.ui.alarms
 
 import android.content.pm.ActivityInfo
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
 import com.example.how_not_to_get_divorced.database.DBAccess
-import com.example.how_not_to_get_divorced.model.Alarm
 import com.example.how_not_to_get_divorced.model.AlarmRepetition
-import com.example.how_not_to_get_divorced.model.Category
 import com.example.how_not_to_get_divorced.model.Completion
-import com.google.android.material.textfield.TextInputEditText
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>() {
@@ -42,9 +35,9 @@ class AlarmAdapter(fragment: AlarmsFragment) : RecyclerView.Adapter<AlarmAdapter
         init{
             rootContainer = view.findViewById(R.id.rootContainer)
             relativeContainer = view.findViewById(R.id.relativeContainer)
-            alarmName = view.findViewById(R.id.alarmName)
+            alarmName = view.findViewById(R.id.taskName)
             switchAlarm = view.findViewById(R.id.switchAlarm)
-            imageAlarmCategory = view.findViewById(R.id.imageViewAlarmCategory)
+            imageAlarmCategory = view.findViewById(R.id.imageViewTaskCategory)
             imageViewDayArray.add(view.findViewById(R.id.imageViewDay1))
             imageViewDayArray.add(view.findViewById(R.id.imageViewDay2))
             imageViewDayArray.add(view.findViewById(R.id.imageViewDay3))

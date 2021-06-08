@@ -13,6 +13,10 @@
             android:icon="@drawable/add_alarm_icon"
             android:title="@string/menu_new_alarm" />
         <item
+            android:id="@+id/nav_tasks"
+            android:icon="@drawable/task_icon"
+            android:title="@string/menu_tasks" />
+        <item
             android:id="@+id/nav_statistics"
             android:icon="@drawable/statistics_icon"
             android:title="@string/menu_statistics" />
