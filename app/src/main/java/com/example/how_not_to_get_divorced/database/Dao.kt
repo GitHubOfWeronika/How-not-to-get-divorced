@@ -137,7 +137,7 @@ interface  Dao {
         return getStatisticsQuery(simpleSQLiteQuery)
     }
 
-    @Query("SELECT MIN(created) FROM alarm")
+    @Query("SELECT MIN(a) FROM (SELECT strftime('%s', 'now') AS a UNION ALL SELECT created AS a FROM alarm)")
     fun getFirstAlarmDate() : LiveData<Long>
 
     @Update

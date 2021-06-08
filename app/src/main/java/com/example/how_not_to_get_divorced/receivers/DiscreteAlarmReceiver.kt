@@ -42,7 +42,6 @@ class DiscreteAlarmReceiver : BroadcastReceiver(){
             0,
             alarm
         )
-        task.date= Calendar.getInstance().time
         db.insertTask(task)
         val manager = NotificationManagerCompat.from(context)
         val notification = NotificationCompat.Builder(context, Application.CHANNEL_ID)

@@ -167,7 +167,7 @@ class DBAccess(context: Context) {
                     task.id!!,
                     task.alarm.id!!,
                     task.date.time/1000,
-                        task.changed?.time,
+                    task.changed?.let { it.time / 1000L },
                     task.completion.id
                 )
             )
