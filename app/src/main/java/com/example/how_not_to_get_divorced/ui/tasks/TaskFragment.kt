@@ -45,7 +45,7 @@ class TaskFragment : Fragment() {
 
 
         val db = DBAccess(requireContext())
-        db.getAllTaskForADay(getDaysAgo(1)).observe(viewLifecycleOwner, androidx.lifecycle.Observer { it : List<Task> ->
+        db.getAllTaskForADay(getDaysAgo(0)).observe(viewLifecycleOwner, androidx.lifecycle.Observer { it : List<Task> ->
             taskModelsList.clear() // Czyślimy obecną listę żeby wypełnić ją na nowo
             taskAdapter.setTasks(taskModelsList) // podpinamy listę do recykler view
             it.forEach {task -> //dla każdego alarmu

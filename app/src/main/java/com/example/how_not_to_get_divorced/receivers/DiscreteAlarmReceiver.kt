@@ -11,6 +11,7 @@ import com.example.how_not_to_get_divorced.model.Alarm
 import com.example.how_not_to_get_divorced.model.AlarmRepetition
 import com.example.how_not_to_get_divorced.model.Task
 import java.time.*
+import java.util.*
 import kotlin.random.Random
 
 class DiscreteAlarmReceiver : BroadcastReceiver(){
@@ -41,6 +42,7 @@ class DiscreteAlarmReceiver : BroadcastReceiver(){
             0,
             alarm
         )
+        task.date= Calendar.getInstance().time
         db.insertTask(task)
         val manager = NotificationManagerCompat.from(context)
         val notification = NotificationCompat.Builder(context, Application.CHANNEL_ID)

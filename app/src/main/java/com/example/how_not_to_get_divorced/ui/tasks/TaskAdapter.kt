@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.how_not_to_get_divorced.R
+import com.example.how_not_to_get_divorced.database.DBAccess
 import com.example.how_not_to_get_divorced.model.Completion
 import com.example.how_not_to_get_divorced.model.Task
 
@@ -60,20 +61,39 @@ class TaskAdapter(fragment: TaskFragment) : RecyclerView.Adapter<TaskAdapter.Vie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item : Task = tasksList[position]
-        holder.taskName.text=item.alarm.name.toString()+" "+ (((item.date.time/1000)%(3600*24))/3600).toString() + ":" + ifNeedZeroAddZero(((item.date.time/1000)%(3600))/60)
+        holder.taskName.text=item.alarm.name.toString()+" "+ ((((item.date.time/1000)%(3600*24))/3600)+2).toString() + ":" + ifNeedZeroAddZero(((item.date.time/1000)%(3600))/60)
         if(item.completion==Completion.FAILED){
             holder.container.setBackgroundColor(Color.argb(0.2f,1.0f,0.0f,0.0f))
         }
         if(item.completion==Completion.DONE){
             holder.container.setBackgroundColor(Color.argb(0.2f,0.0f,1.0f,0.0f))
         }
+
         holder.taskCancel.setOnClickListener(){
-            item.completion=Completion.FAILED
-            holder.container.setBackgroundColor(Color.argb(0.2f,1.0f,0.0f,0.0f))
+            if(item.completion!=Completion.FAILED){
+                item.completion=Completion.FAILED
+            }
+            else if (item.completion==Completion.FAILED){
+                item.completion=Completion.WAITING
+            }
+            item.changed=Calendar.getInstance().time
+            Thread {
+                DBAccess(this.fragment.requireContext()).updateTest(item)
+            }.start()
+            notifyDataSetChanged()
         }
         holder.taskComplete.setOnClickListener(){
-            item.completion=Completion.DONE
-            holder.container.setBackgroundColor(Color.argb(0.2f,0.0f,1.0f,0.0f))
+            if(item.completion!=Completion.DONE){
+                item.completion=Completion.DONE
+            }
+            else if (item.completion==Completion.DONE){
+                item.completion=Completion.WAITING
+            }
+            item.changed=Calendar.getInstance().time
+            Thread {
+                DBAccess(this.fragment.requireContext()).updateTest(item)
+            }.start()
+            notifyDataSetChanged()
         }
 
     }

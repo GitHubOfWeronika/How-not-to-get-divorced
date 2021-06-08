@@ -166,8 +166,8 @@ class DBAccess(context: Context) {
                 TaskEntity(
                     task.id!!,
                     task.alarm.id!!,
-                    task.date.time,
-                    task.changed?.let { it.time / 1000L },
+                    task.date.time/1000,
+                        task.changed?.time,
                     task.completion.id
                 )
             )
